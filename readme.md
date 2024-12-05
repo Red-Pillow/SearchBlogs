@@ -41,4 +41,4 @@ Follow these steps to set up and run the Blog Search application locally.
 First, clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/<username>/<repository-name>.git
+git clone https://github.com/Red-Pillow/SearchBlogs.git
