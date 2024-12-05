@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Blog Search</title>
+</head>
+<body class="bg-gradient-to-br from-purple-500 via-pink-400 to-blue-500 text-gray-800 min-h-screen">
+    <div class="flex items-center justify-center px-6 min-h-screen">
+        <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
+            <h1 class="text-4xl font-bold text-center text-blue-600 mb-6">Search Blogs</h1>
+            <form action="/search" method="POST" class="space-y-4">
+                <input 
+                    type="text" 
+                    name="query" 
+                    placeholder="Search for blogs..." 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                >
+                <select 
+                    name="category" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="All">All Categories</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Health">Health</option>
+                    <option value="Travel">Travel</option>
+                </select>
+                <button 
+                    type="submit" 
+                    class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
+                    Search
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
