@@ -6,7 +6,7 @@ A professional and interactive blog search web application that allows users to 
 
 ## App live at:
 
-[searchblogs.onrender.com](https://searchblogs.onrender.com/)
+<a href="https://searchblogs.onrender.com/" target="_blank">searchblogs.onrender.com</a>
 
 ## Features
 
