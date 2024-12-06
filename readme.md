@@ -4,6 +4,10 @@ A professional and interactive blog search web application that allows users to 
 
 ---
 
+## App live at:
+
+[searchblogs.onrender.com](https://searchblogs.onrender.com/)
+
 ## Features
 
 - **Search Functionality**: Allows users to search blog posts by title or category.
