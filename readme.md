@@ -54,7 +54,7 @@ git clone https://github.com/Red-Pillow/SearchBlogs.git
 npm install
 ```
 
-### 3. Run the applicatiom
+### 3. Run the application
 
 ```
 node app.js
