@@ -8,26 +8,26 @@ const bcrypt = require("bcrypt");
 require("dotenv").config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
-// Middleware
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(express.json());
 app.set("view engine", "ejs");
 
-// MongoDB Connection
+
 mongoose
-  .connect("mongodb+srv://my_user_app:KgrzjC5bOBOL0tlW@cluster0.awlad.mongodb.net/BlogSearch", { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
-// Models
+
 const User = require("./models/User");
 const Blog = require("./models/Blog");
 const Comment = require("./models/Comment");
 
-// Middleware for JWT Auth
+
 function authenticateToken(req, res, next) {
   const token = req.cookies.jwt;
   if (!token) return res.redirect("/login");
@@ -39,12 +39,12 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// Routes
+
 app.get("/", (req, res) => res.redirect("/register"));
 
-app.use("/", require("./routes/auth")); // Authentication routes
-app.use("/blogs", authenticateToken, require("./routes/blogs")); // Blog routes
-app.use("/comments", authenticateToken, require("./routes/comments")); // Comment routes
+app.use("/", require("./routes/auth")); 
+app.use("/blogs", authenticateToken, require("./routes/blogs")); 
+app.use("/comments", authenticateToken, require("./routes/comments")); 
 
-// Start server
+
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

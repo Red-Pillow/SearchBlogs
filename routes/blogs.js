@@ -5,23 +5,23 @@ const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
-// Middleware to check if the user is authenticated
+
 function isAuthenticated(req, res, next) {
   const token = req.cookies.jwt;
   if (!token) {
-    return res.redirect("/login"); // Redirect to login if the user is not authenticated
+    return res.redirect("/login"); 
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return res.redirect("/login"); // Redirect if the JWT verification fails
+      return res.redirect("/login"); 
     }
-    req.userId = decoded.id; // Attach the user ID to the request
+    req.userId = decoded.id; 
     next();
   });
 }
 
-// Homepage showing blogs
+
 router.get("/", async (req, res) => {
   try {
     const blogs = await Blog.find();
@@ -32,12 +32,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Add Blog Form (Authenticated users only)
+
 router.get("/create", isAuthenticated, (req, res) => {
-  res.render("createBlog"); // Render the form for adding a new blog
+  res.render("createBlog"); 
 });
 
-// Add New Blog (Authenticated users only)
+
 router.post("/create", isAuthenticated, async (req, res) => {
   try {
     const { title, content, category } = req.body;
@@ -45,17 +45,17 @@ router.post("/create", isAuthenticated, async (req, res) => {
       title,
       content,
       category,
-      author: req.userId, // Save the logged-in user as the author
+      author: req.userId,
     });
     await newBlog.save();
-    res.redirect("/blogs"); // Redirect to the blogs list after creation
+    res.redirect("/blogs"); 
   } catch (err) {
     console.error("Error creating blog:", err.message);
     res.status(500).send("Error creating blog");
   }
 });
 
-// Blog Details (Ensure this comes after create route)
+
 router.get("/:id", async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id).populate("comments");
@@ -69,18 +69,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Search Blogs
+
 router.post("/search", async (req, res) => {
   try {
     const query = req.body.query;
     if (!query) {
-      return res.redirect("/blogs"); // If no query, redirect to the homepage
+      return res.redirect("/blogs");
     }
 
-    // Search for blogs by title or content
+
     const blogs = await Blog.find({
       $or: [
-        { title: { $regex: query, $options: "i" } }, // Case-insensitive search
+        { title: { $regex: query, $options: "i" } },
         { content: { $regex: query, $options: "i" } }
       ]
     });
@@ -92,35 +92,35 @@ router.post("/search", async (req, res) => {
   }
 });
 
-// Add a comment to a blog
+
 router.post("/comments/:blogId", isAuthenticated, async (req, res) => {
   try {
     console.log("Received comment:", req.body);
     const { content } = req.body;
     const blogId = req.params.blogId;
 
-    // Find the blog
+
     const blog = await Blog.findById(blogId);
     if (!blog) {
       return res.status(404).send("Blog not found");
     }
 
-    // Create a new comment using the Comment model
+
     console.log(content);
     const newComment = new Comment({
       content,
-      author: req.userId, // Link the comment to the logged-in user
-      blog: blogId,       // Link the comment to the blog
+      author: req.userId, 
+      blog: blogId,     
     });
 
-    // Save the comment to the database
+
     await newComment.save();
 
-    // Optionally, push this comment's ID into the blog's comments array (for easier querying)
+
     blog.comments.push(newComment._id);
     await blog.save();
 
-    // Send the new comment as JSON to the client
+
     res.status(200).json(newComment);
   } catch (err) {
     console.error("Error adding comment:", err.message);

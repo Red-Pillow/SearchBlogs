@@ -1,11 +1,11 @@
-<!-- Navbar -->
+
 <nav class="bg-gray-800 text-white p-4">
     <div class="container mx-auto flex justify-between items-center">
         <a href="/blogs" class="text-xl font-bold flex items-center space-x-2">
             <span>BlogIt</span>
         </a>
         
-        <!-- Mobile Menu Button (Hamburger) -->
+
         <div class="block lg:hidden">
             <button id="navbar-toggle" class="text-white focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
@@ -14,7 +14,7 @@
             </button>
         </div>
 
-        <!-- Navbar Links (Desktop) -->
+
         <div class="hidden lg:flex space-x-4">
             <a href="/blogs" class="hover:underline">Home</a>
             <a href="/blogs/create" class="hover:underline">Add Blog</a>
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <!-- Mobile Menu Links -->
+
     <div id="mobile-menu" class="lg:hidden hidden bg-gray-800 text-white space-y-4 py-4 mt-4 px-6">
         <a href="/blogs" class="hover:underline block">Home</a>
         <a href="/blogs/create" class="hover:underline block">Add Blog</a>
@@ -31,7 +31,7 @@
 </nav>
 
 <script>
-    // Toggle the mobile menu visibility
+
     const toggleButton = document.getElementById("navbar-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
 

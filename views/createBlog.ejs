@@ -7,7 +7,7 @@
   <title>Create Blog</title>
 </head>
 <body class="bg-gradient-to-br from-yellow-400 via-red-500 to-pink-500 text-gray-800 min-h-screen">
-  <!-- Include Navbar -->
+
   <%- include('navbar') %>
   
   <div class="flex items-center justify-center px-6 min-h-screen">
@@ -43,5 +43,24 @@
       </form>
     </div>
   </div>
+  <script>
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted) {
+            console.log("Page loaded from cache.");
+
+            fetch("/auth/check", { method: "GET", credentials: "same-origin" })
+                .then((response) => {
+                    if (!response.ok) {
+
+                        window.location.href = "/login";
+                    }
+                })
+                .catch((err) => {
+                    console.error("Authentication check failed:", err);
+                    window.location.href = "/login";
+                });
+        }
+    });
+</script>    
 </body>
 </html>
