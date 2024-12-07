@@ -4,35 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Blog Search</title>
+    <title>Blogs</title>
 </head>
 <body class="bg-gradient-to-br from-purple-500 via-pink-400 to-blue-500 text-gray-800 min-h-screen">
-    <div class="flex items-center justify-center px-6 min-h-screen">
-        <div class="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
-            <h1 class="text-4xl font-bold text-center text-blue-600 mb-6">Search Blogs</h1>
-            <form action="/search" method="POST" class="space-y-4">
-                <input 
-                    type="text" 
-                    name="query" 
-                    placeholder="Search for blogs..." 
-                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                >
-                <select 
-                    name="category" 
-                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="All">All Categories</option>
-                    <option value="Programming">Programming</option>
-                    <option value="Health">Health</option>
-                    <option value="Travel">Travel</option>
-                </select>
-                <button 
-                    type="submit" 
-                    class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition">
-                    Search
-                </button>
-            </form>
-        </div>
+    <!-- Include Navbar -->
+    <%- include('navbar') %>
+
+    <!-- Search Bar -->
+    <div class="max-w-4xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+        <form action="/blogs/search" method="POST" class="flex space-x-4">
+            <input 
+                type="text" 
+                name="query" 
+                placeholder="Search blogs by title or content..." 
+                class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+            <button 
+                type="submit" 
+                class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+                Search
+            </button>
+        </form>
+    </div>
+
+    <!-- Blog List -->
+    <div class="max-w-4xl mx-auto mt-8 px-4 sm:px-6 lg:px-8 grid grid-cols-1 gap-6">
+        <% blogs.forEach(blog => { %>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-bold text-blue-600"><%= blog.title %></h2>
+                <p class="text-gray-700 mt-2"><%= blog.content.substring(0, 150) %>...</p>
+                <a 
+                    href="/blogs/<%= blog._id %>" 
+                    class="inline-block mt-4 text-white bg-blue-600 py-2 px-4 rounded text-xs font-semibold text-center hover:bg-blue-700 transition-all ease-in-out duration-200">
+                    Read More
+                </a>
+            </div>
+        <% }); %>
     </div>
 </body>
 </html>

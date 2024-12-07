@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= blog.title %></title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-500 to-purple-600 text-white min-h-screen">
+<!-- Include Navbar -->
+<%- include('navbar') %>
+  <!-- Blog Content -->
+  <div class="container mx-auto px-6 py-12">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="p-6 bg-gradient-to-r from-blue-400 to-purple-500 text-white">
+        <h1 class="text-4xl font-bold mb-4"><%= blog.title %></h1>
+        <p class="text-lg leading-relaxed mb-6"><%= blog.content %></p>
+      </div>
+      <div class="p-6 bg-gray-100">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Comments</h2>
+
+        <!-- Add Comment Form -->
+        <form id="comment-form" class="space-y-4 mb-6">
+        <textarea id="comment-input" name="content" placeholder="Add a comment" 
+        class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black bg-white" 
+        required></textarea>
+          <button type="submit" class="inline-block mt-4 text-white bg-blue-600 py-2 px-4 rounded text-xs font-semibold text-center hover:bg-blue-700 transition-all ease-in-out duration-200">Post Comment</button>
+        </form>
+
+        <!-- Display Comments -->
+        <ul id="comments-list" class="space-y-4">
+          <% blog.comments.forEach(comment => { %>
+            <li class="bg-white p-4 border border-gray-300 rounded-lg shadow-sm">
+              <p class="text-gray-700"><%= comment.content %></p>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-blue-800 text-white py-6 mt-12">
+    <div class="container mx-auto text-center">
+      <p>&copy; 2024 BlogSite. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript for Real-Time Comment Update -->
+  <script>
+    const commentForm = document.getElementById("comment-form");
+    const commentInput = document.getElementById("comment-input");
+    const commentsList = document.getElementById("comments-list");
+
+    commentForm.addEventListener("submit", async (event) => {
+      event.preventDefault(); // Prevent form from reloading the page
+
+      const commentContent = commentInput.value.trim();
+      const blogId = "<%= blog._id %>"; // Ensure blogId is passed correctly
+
+      if (commentContent) {
+        console.log(commentContent)
+        try {
+          // Send a POST request to add the new comment
+          console.log(commentContent)
+          const response = await fetch(`/blogs/comments/${blogId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ content: commentContent }), // Send the content as JSON
+          });
+          console.log(response.ok)
+          console.log(response.status)
+          // If the response is successful, append the new comment to the list
+          if (response.ok) {
+            const newComment = await response.json();
+            const newCommentElement = document.createElement("li");
+            newCommentElement.classList.add("bg-white", "p-4", "border", "border-gray-300", "rounded-lg", "shadow-sm");
+            newCommentElement.innerHTML = `<p class="text-gray-700">${newComment.content}</p>`;
+            commentsList.appendChild(newCommentElement);
+
+            // Clear the input after submitting
+            commentInput.value = "";
+          } else {
+            alert("Failed to post comment.");
+          }
+        } catch (error) {
+          console.error("Error posting comment:", error);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
