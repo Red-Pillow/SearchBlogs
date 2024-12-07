@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Register</title>
+</head>
+<body class="bg-gradient-to-br from-green-400 via-teal-400 to-blue-500 text-gray-800 min-h-screen">
+    <!-- Navbar -->
+<nav class="bg-gray-800 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="/blogs" class="text-xl font-bold flex items-center space-x-2">
+            <span>BlogIt</span>
+            </a>
+            </div>
+</nav>
+    <div class="flex items-center justify-center px-6 min-h-screen">
+        <div class="w-full max-w-md bg-white shadow-lg rounded-lg p-6">
+            <h1 class="text-4xl font-bold text-center text-green-600 mb-6">Create an Account</h1>
+            <form action="/register" method="POST" class="space-y-4">
+                <input 
+                    type="text" 
+                    name="username" 
+                    placeholder="Enter your username" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    required
+                >
+                <input 
+                    type="email" 
+                    name="email" 
+                    placeholder="Enter your email" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    required
+                >
+                <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Create a password" 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                    required
+                >
+                <button 
+                    type="submit" 
+                    class="w-full bg-green-600 text-white p-3 rounded-lg hover:bg-green-700 transition">
+                    Register
+                </button>
+            </form>
+            <p class="text-center text-sm text-gray-600 mt-4">
+                Already have an account? 
+                <a href="/login" class="text-green-500 hover:underline">Login here</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
