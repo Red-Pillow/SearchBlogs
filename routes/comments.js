@@ -4,7 +4,7 @@ const Blog = require("../models/Blog");
 
 const router = express.Router();
 
-// Add a comment
+
 router.post("/:blogId", async (req, res) => {
     console.log("we are in add a comment in comments.js")
     console.log(req.body.content)

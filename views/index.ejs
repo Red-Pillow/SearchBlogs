@@ -7,10 +7,7 @@
     <title>Blogs</title>
 </head>
 <body class="bg-gradient-to-br from-purple-500 via-pink-400 to-blue-500 text-gray-800 min-h-screen">
-    <!-- Include Navbar -->
     <%- include('navbar') %>
-
-    <!-- Search Bar -->
     <div class="max-w-4xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
         <form action="/blogs/search" method="POST" class="flex space-x-4">
             <input 
@@ -27,7 +24,6 @@
         </form>
     </div>
 
-    <!-- Blog List -->
     <div class="max-w-4xl mx-auto mt-8 px-4 sm:px-6 lg:px-8 grid grid-cols-1 gap-6">
         <% blogs.forEach(blog => { %>
             <div class="bg-white p-6 rounded-lg shadow-lg">
@@ -41,5 +37,24 @@
             </div>
         <% }); %>
     </div>
+    <script>
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted) {
+                console.log("Page loaded from cache.");
+    
+                fetch("/auth/check", { method: "GET", credentials: "same-origin" })
+                    .then((response) => {
+                        if (!response.ok) {
+
+                            window.location.href = "/login";
+                        }
+                    })
+                    .catch((err) => {
+                        console.error("Authentication check failed:", err);
+                        window.location.href = "/login";
+                    });
+            }
+        });
+    </script>     
 </body>
 </html>
